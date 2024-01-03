@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgbouncer-deployment
+  labels:
+    environment: Development
+    name: PgbouncerDeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: PgbouncerPod
+  template:
+    metadata:
+      name: pgbouncer-pod
+      labels:
+        environment: Development
+        name: PgbouncerPod
+    spec:
+      containers:
+      - name: pgbouncer
+        image: bitnami/pgbouncer:latest
+        ports:
+        - containerPort: 6432
+        envFrom:
+        - configMapRef:
+            name: pgbouncer-configmap
+        - secretRef:
+            name: pgbouncer-secrets

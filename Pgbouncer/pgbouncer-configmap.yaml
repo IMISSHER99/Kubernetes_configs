@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgbouncer-configmap
+  namespace: sandbox
+data:
+  PGBOUNCER_POOL_MODE: "transaction"
+  PGBOUNCER_MAX_PREPARED_STATEMENTS: "100"
+  PGBOUNCER_MAX_CLIENT_CONN: "100"
+  POSTGRESQL_HOST: "localhost"
+  POSTGRESQL_PORT: "5432"

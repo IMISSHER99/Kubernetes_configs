@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    environment: Development
+    name: PostgresDeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: PostgresPOD
+  template:
+    metadata:
+      name: postgres-pod
+      labels:
+        name: PostgresPOD
+        environment: Development
+    spec:
+      containers:
+      - name: postgres-db
+        image: postgres
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - configMapRef:
+            name: postgres-db-configmap
+
+

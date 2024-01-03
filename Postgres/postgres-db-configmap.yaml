@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-db-configmap
+  namespace: sandbox
+data:
+  POSTGRES_PASSWORD: "appu99vinod"

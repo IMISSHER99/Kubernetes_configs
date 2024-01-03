@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: sandbox
+  name: postgres-pgbouncer-deployment
+  labels:
+    name: PostgresAndPgbouncer
+    function: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  postgres-pgbouncer-pod
+      function: database
+  template:
+    metadata:
+      namespace: sandbox
+      name:  postgres-pgbouncer-pod
+      labels:
+        name:  postgres-pgbouncer-pod
+        function: database
+    spec: 
+      containers:
+        - image: postgres
+          name:  postgres-db
+          envFrom:
+          - configMapRef:
+              name:  postgres-db-configmap
+          resources:
+            requests: 
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "512Mi"
+        - image:  bitnami/pgbouncer:latest
+          name:  pgbouncer
+          envFrom: 
+          - configMapRef:
+              name:  pgbouncer-configmap
+          - secretRef:
+              name:  pgbouncer-secrets
+          resources:
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "512Mi"
