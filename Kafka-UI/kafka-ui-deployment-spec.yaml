@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  namespace: sandbox
+  labels:
+    name:  kafka-ui-deployment
+    environment: Development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kafka-ui-pod
+      environment: Development
+  template:
+    metadata:
+      name: kafka-ui-pod
+      labels:
+        name:  kafka-ui-pod
+        environment: Development
+    spec:
+      containers:
+        - name: kafka
+          image: provectuslabs/kafka-ui
+          ports:
+          - containerPort: 8080
+          resources:
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1024Mi"
+          envFrom:
+          - configMapRef:
+              name: kafka-configmap
+          

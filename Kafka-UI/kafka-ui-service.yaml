@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui-service
+  namespace: sandbox
+  labels:
+    name:  kafka-ui-service
+    environment: Development
+spec:
+  type: NodePort
+  selector:
+    name: kafka-ui-pod
+    environment: Development
+  ports:
+  - name:  kafka-ui-port
+    port:  8080
+    protocol: TCP

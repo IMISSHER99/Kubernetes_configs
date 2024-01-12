@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: sandbox
+  labels:
+    name:  kafka-deployment
+    environment: Development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kafka-pod
+      environment: Development
+  template:
+    metadata:
+      name: kafka-pod
+      labels:
+        name:  kafka-pod
+        environment: Development
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka
+          ports:
+          - containerPort: 9092
+          - containerPort: 29092
+          - containerPort: 9999
+          resources:
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1024Mi"
+          envFrom:
+          - configMapRef:
+              name: kafka-configmap
+          

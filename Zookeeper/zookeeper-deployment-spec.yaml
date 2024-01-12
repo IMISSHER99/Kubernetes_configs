@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: sandbox
+  labels:
+    name: zookeeper-deployment
+    environment: Development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name:  zookeeper-pod
+      environment: Development
+  template:
+    metadata:
+      name: zookeeper
+      labels:
+        name: zookeeper-pod
+        environment: Development
+    spec:
+      containers:
+        - name: zookeeper
+          image:  confluentinc/cp-zookeeper
+          ports:
+          - containerPort: 2181
+          envFrom:
+          - configMapRef:
+              name: zookeeper-configmap
+          resources:
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "1024Mi"
