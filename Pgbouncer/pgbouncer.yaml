@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgbouncer-deployment
+  name: pgbouncer
+  namespace: sandbox
   labels:
     environment: Development
     name: PgbouncerDeployment
@@ -27,3 +28,10 @@ spec:
             name: pgbouncer-configmap
         - secretRef:
             name: pgbouncer-secrets
+        resources:
+          requests:
+            cpu: "1"
+            memory: "512Mi"
+          limits:
+            cpu: "2"
+            memory: "1024Mi"

@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-deployment
+  name: postgres
+  namespace: sandbox
   labels:
     environment: Development
     name: PostgresDeployment
@@ -25,5 +26,10 @@ spec:
         envFrom:
         - configMapRef:
             name: postgres-db-configmap
-
-
+        resources:
+          requests:
+            cpu: "1"
+            memory: "512Mi"
+          limits:
+            cpu: "2"
+            memory: "1024Mi"
