@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  pgbouncer-service
+  namespace: sandbox
+spec:
+  type: NodePort
+  selector:
+    name: pgbouncer-pod
+    environment: Development
+  ports:
+  - name:  postgres-port
+    port:  6432
+    targetPort:  6432
