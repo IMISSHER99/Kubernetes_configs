@@ -34,6 +34,6 @@ spec:
             cpu: "2"
             memory: "1024Mi"
       volumes:
-      - name:  postgres-volume
+      - name: postgres-volume
         persistentVolumeClaim:
           claimName: postgres-pvc
